@@ -28,7 +28,11 @@ TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
 if not TAVILY_API_KEY:
     TAVILY_API_KEY = st.secrets["TAVILY_API_KEY"]
-    tavily = TavilyClient(api_key=TAVILY_API_KEY)
+
+tavily = TavilyClient(
+    api_key=TAVILY_API_KEY
+)
+print("TAVILY CLIENT CREATED SUCCESSFULLY")
 
 
 def extract_claims(text):

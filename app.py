@@ -51,7 +51,6 @@ if uploaded_file:
 
             claims = extract_claims(text)
 
-        # Avoid burning credits on huge PDFs
         claims = claims[:15]
 
         st.subheader(
@@ -75,13 +74,22 @@ if uploaded_file:
                     claim
                 )
 
-                evidence = search_web(search_query)
+                evidence = search_web(
+                    search_query
+                )
 
-                st.write("DEBUG EVIDENCE:", evidence)
+                print("\n========================")
+                print("CLAIM:", claim)
+                print("QUERY:", search_query)
+                print("EVIDENCE TYPE:", type(evidence))
+                print("EVIDENCE:", evidence)
+                print("========================\n")
 
-                claims_with_evidence.append({
-                   ...
-                 })
+                st.write(
+                    f"DEBUG EVIDENCE FOR: {claim}"
+                )
+
+                st.json(evidence)
 
                 claims_with_evidence.append(
                     {
@@ -94,6 +102,7 @@ if uploaded_file:
         with st.expander(
             "View Search Evidence"
         ):
+
             st.json(
                 claims_with_evidence
             )
@@ -171,6 +180,7 @@ if uploaded_file:
                 )
 
                 for source in sources:
+
                     st.write(source)
 
         csv = df.to_csv(
