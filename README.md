@@ -36,7 +36,6 @@ Fact Verification (Gemini)
 Report Generation
 
 ## Screenshots
-(Add screenshots here)
+<img width="1430" height="828" alt="Screenshot 2026-06-14 at 7 52 18 PM" src="https://github.com/user-attachments/assets/adc1e886-45c8-4b5a-b602-8122127d2b97" />
+<img width="1426" height="807" alt="Screenshot 2026-06-14 at 7 52 33 PM" src="https://github.com/user-attachments/assets/a64e8038-ca91-4071-b078-a6d88aad428b" />
 
-## Setup
-...
