@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 from tavily import TavilyClient
 
+tavily = TavilyClient(api_key=TAVILY_API_KEY)
+
 from prompts import (
     CLAIM_EXTRACTION_PROMPT,
     VERIFY_PROMPT
@@ -58,30 +60,35 @@ def search_web(query):
 
         response = tavily.search(
             query=query,
-            max_results=3,
-            search_depth="basic"
+            search_depth="basic",
+            max_results=5
         )
 
-        print("TAVILY RESPONSE:")
+        print("========== TAVILY RESPONSE ==========")
         print(response)
+
+        results = response.get("results", [])
 
         evidence = []
 
-        for result in response.get("results", []):
+        for r in results:
 
             evidence.append(
                 {
-                    "title": result.get("title", ""),
-                    "snippet": result.get("content", ""),
-                    "url": result.get("url", "")
+                    "title": r.get("title", ""),
+                    "snippet": r.get("content", ""),
+                    "url": r.get("url", "")
                 }
             )
+
+        print("========== EVIDENCE ==========")
+        print(evidence)
 
         return evidence
 
     except Exception as e:
 
-        print(f"TAVILY ERROR: {e}")
+        print("TAVILY ERROR:", e)
         return []
 
 
