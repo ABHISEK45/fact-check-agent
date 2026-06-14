@@ -75,9 +75,13 @@ if uploaded_file:
                     claim
                 )
 
-                evidence = search_web(
-                    search_query
-                )
+                evidence = search_web(search_query)
+
+                st.write("DEBUG EVIDENCE:", evidence)
+
+                claims_with_evidence.append({
+                   ...
+                 })
 
                 claims_with_evidence.append(
                     {
