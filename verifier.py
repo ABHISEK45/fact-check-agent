@@ -61,14 +61,19 @@ def search_web(query):
 
     try:
 
+        print(f"SEARCH QUERY: {query}")
+
         response = tavily.search(
             query=query,
             search_depth="basic",
             max_results=5
         )
 
-        print("========== TAVILY RESPONSE ==========")
+        print("RAW TAVILY RESPONSE:")
         print(response)
+
+        if not response:
+            return []
 
         results = response.get("results", [])
 
@@ -78,20 +83,22 @@ def search_web(query):
 
             evidence.append(
                 {
-                    "title": r.get("title", ""),
-                    "snippet": r.get("content", ""),
-                    "url": r.get("url", "")
+                    "title": str(r.get("title", "")),
+                    "snippet": str(r.get("content", "")),
+                    "url": str(r.get("url", ""))
                 }
             )
 
-        print("========== EVIDENCE ==========")
+        print("PARSED EVIDENCE:")
         print(evidence)
 
         return evidence
 
     except Exception as e:
 
-        print("TAVILY ERROR:", e)
+        print("TAVILY ERROR:")
+        print(str(e))
+
         return []
 
 
