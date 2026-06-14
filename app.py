@@ -78,19 +78,6 @@ if uploaded_file:
                     search_query
                 )
 
-                print("\n========================")
-                print("CLAIM:", claim)
-                print("QUERY:", search_query)
-                print("EVIDENCE TYPE:", type(evidence))
-                print("EVIDENCE:", evidence)
-                print("========================\n")
-
-                st.write(
-                    f"DEBUG EVIDENCE FOR: {claim}"
-                )
-
-                st.json(evidence)
-
                 claims_with_evidence.append(
                     {
                         "claim": claim,

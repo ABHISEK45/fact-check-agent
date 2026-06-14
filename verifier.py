@@ -32,8 +32,6 @@ if not TAVILY_API_KEY:
 tavily = TavilyClient(
     api_key=TAVILY_API_KEY
 )
-print("TAVILY CLIENT CREATED SUCCESSFULLY")
-
 
 def extract_claims(text):
 
@@ -69,9 +67,6 @@ def search_web(query):
             max_results=5
         )
 
-        print("RAW TAVILY RESPONSE:")
-        print(response)
-
         if not response:
             return []
 
@@ -88,9 +83,6 @@ def search_web(query):
                     "url": str(r.get("url", ""))
                 }
             )
-
-        print("PARSED EVIDENCE:")
-        print(evidence)
 
         return evidence
 
