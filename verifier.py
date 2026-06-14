@@ -62,27 +62,18 @@ def search_web(query):
             search_depth="basic"
         )
 
+        print("TAVILY RESPONSE:")
+        print(response)
+
         evidence = []
 
-        for result in response.get(
-            "results",
-            []
-        ):
+        for result in response.get("results", []):
 
             evidence.append(
                 {
-                    "title": result.get(
-                        "title",
-                        ""
-                    ),
-                    "snippet": result.get(
-                        "content",
-                        ""
-                    )[:500],
-                    "url": result.get(
-                        "url",
-                        ""
-                    )
+                    "title": result.get("title", ""),
+                    "snippet": result.get("content", ""),
+                    "url": result.get("url", "")
                 }
             )
 
@@ -90,10 +81,7 @@ def search_web(query):
 
     except Exception as e:
 
-        print(
-            f"TAVILY ERROR: {e}"
-        )
-
+        print(f"TAVILY ERROR: {e}")
         return []
 
 
