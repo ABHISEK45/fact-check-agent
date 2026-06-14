@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 from tavily import TavilyClient
 
-tavily = TavilyClient(api_key=TAVILY_API_KEY)
-
 from prompts import (
     CLAIM_EXTRACTION_PROMPT,
     VERIFY_PROMPT
@@ -30,6 +28,7 @@ TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
 if not TAVILY_API_KEY:
     TAVILY_API_KEY = st.secrets["TAVILY_API_KEY"]
+    tavily = TavilyClient(api_key=TAVILY_API_KEY)
 
 
 def extract_claims(text):
