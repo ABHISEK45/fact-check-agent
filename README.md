@@ -1,41 +1,41 @@
-# Fact Check Agent
+# 📄 Fact Check Agent
 
-## Overview
-A web application that automatically fact-checks claims inside uploaded PDFs by extracting factual statements, searching live web sources, and generating verification reports.
+An AI-powered fact-checking application that extracts factual claims from PDF documents, searches the live web for supporting evidence, verifies claims using Gemini, and stores the generated reports in PostgreSQL.
 
 ## Features
-- PDF Upload
-- Claim Extraction
-- Search Query Generation
-- Live Web Search (Tavily)
-- Fact Verification using Gemini
-- Evidence Collection
-- CSV Report Export
 
-## Tech Stack
-- Streamlit
-- Gemini 2.5 Flash
-- Tavily Search API
-- PDFPlumber
-- Python
+- Upload PDF documents
+- Extract factual claims using Google Gemini
+- Generate targeted search queries for extracted claims
+- Search the live web using Tavily
+- Verify claims against retrieved web evidence
+- Classify claims as:
+  - Verified
+  - False
+  - Inaccurate
+  - Insufficient Evidence
+- Generate explanations and corrected facts
+- Display sources used for verification
+- Store fact-checking reports and claims in PostgreSQL
+- Export results as CSV
 
 ## Architecture
 
-PDF
-↓
-Claim Extraction (Gemini)
-↓
-Search Query Generation
-↓
-Tavily Web Search
-↓
-Evidence Collection
-↓
-Fact Verification (Gemini)
-↓
-Report Generation
-
-## Screenshots
-<img width="1430" height="828" alt="Screenshot 2026-06-14 at 7 52 18 PM" src="https://github.com/user-attachments/assets/adc1e886-45c8-4b5a-b602-8122127d2b97" />
-<img width="1426" height="807" alt="Screenshot 2026-06-14 at 7 52 33 PM" src="https://github.com/user-attachments/assets/a64e8038-ca91-4071-b078-a6d88aad428b" />
-
+```text
+PDF Upload
+    ↓
+PDF Text Extraction
+    ↓
+Gemini
+Claim Extraction
+    ↓
+Tavily
+Live Web Search
+    ↓
+Gemini
+Evidence-based Verification
+    ↓
+PostgreSQL
+Report & Claim Storage
+    ↓
+CSV Report

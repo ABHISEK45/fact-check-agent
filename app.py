@@ -9,6 +9,9 @@ from verifier import (
     verify_all_claims
 )
 
+from db_operations import save_report
+
+
 st.set_page_config(
     page_title="Fact Check Agent",
     layout="wide"
@@ -20,6 +23,7 @@ uploaded_file = st.file_uploader(
     "Upload PDF",
     type=["pdf"]
 )
+
 
 if uploaded_file:
 
@@ -45,12 +49,17 @@ if uploaded_file:
         "Extract Claims & Verify Facts"
     ):
 
+        # --------------------------------
+        # STEP 1: Extract claims
+        # --------------------------------
+
         with st.spinner(
             "Extracting claims..."
         ):
 
             claims = extract_claims(text)
 
+        # Limit claims to control API usage
         claims = claims[:15]
 
         st.subheader(
@@ -58,6 +67,10 @@ if uploaded_file:
         )
 
         st.json(claims)
+
+        # --------------------------------
+        # STEP 2: Search web
+        # --------------------------------
 
         claims_with_evidence = []
 
@@ -94,6 +107,10 @@ if uploaded_file:
                 claims_with_evidence
             )
 
+        # --------------------------------
+        # STEP 3: Verify claims
+        # --------------------------------
+
         with st.spinner(
             "Verifying claims..."
         ):
@@ -124,12 +141,18 @@ if uploaded_file:
                 }
             )
 
-        df = pd.DataFrame(rows)
+        df = pd.DataFrame(
+            rows
+        )
 
         st.dataframe(
             df,
             width="stretch"
         )
+
+        # --------------------------------
+        # STEP 4: Display detailed results
+        # --------------------------------
 
         for result in results:
 
@@ -140,19 +163,23 @@ if uploaded_file:
             )
 
             st.write(
-                f"**Verdict:** {result.get('verdict')}"
+                f"**Verdict:** "
+                f"{result.get('verdict')}"
             )
 
             st.write(
-                f"**Confidence:** {result.get('confidence')}"
+                f"**Confidence:** "
+                f"{result.get('confidence')}"
             )
 
             st.write(
-                f"**Correct Fact:** {result.get('correct_fact')}"
+                f"**Correct Fact:** "
+                f"{result.get('correct_fact')}"
             )
 
             st.write(
-                f"**Explanation:** {result.get('explanation')}"
+                f"**Explanation:** "
+                f"{result.get('explanation')}"
             )
 
             sources = result.get(
@@ -168,7 +195,36 @@ if uploaded_file:
 
                 for source in sources:
 
-                    st.write(source)
+                    st.write(
+                        source
+                    )
+
+        # --------------------------------
+        # STEP 5: Save report to PostgreSQL
+        # --------------------------------
+
+        try:
+
+            report_id = save_report(
+                filename=uploaded_file.name,
+                claims=claims,
+                results=results
+            )
+
+            st.success(
+                f"Report saved successfully "
+                f"to PostgreSQL. Report ID: {report_id}"
+            )
+
+        except Exception as e:
+
+            st.error(
+                f"Could not save report to database: {e}"
+            )
+
+        # --------------------------------
+        # STEP 6: Download CSV
+        # --------------------------------
 
         csv = df.to_csv(
             index=False

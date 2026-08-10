@@ -4,3 +4,5 @@ tavily-python
 pdfplumber
 python-dotenv
 pandas
+SQLAlchemy
+psycopg2-binary
